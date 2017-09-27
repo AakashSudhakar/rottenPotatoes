@@ -1,0 +1,11 @@
+<!-- reviews-index.handlebars -->
+
+<h1>Projects</h1>
+
+<a href="/reviews/new">New Review</a>
+
+<h1>{{Reviews}}</h1>
+{{#each reviews}}
+  <h3>{{this.title}}</h3>
+  <small>{{this.movieTitle}}</small>
+{{/each}}

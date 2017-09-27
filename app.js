@@ -31,7 +31,7 @@ app.engine("handlebars", exphbs({defaultLayout: "main"})); // New Review is defi
   // res.send("Hello World!");
 }); */
 
-// Index to see all reviews
+// INDEX
 app.get("/", function(req, res) {
   Review.find(function(err, reviews) {
     res.render("reviews-index", {reviews: reviews});
@@ -48,7 +48,14 @@ app.get("/reviews/:id", function(req, res) {
   });
 });
 
+// EDIT
+app.get("/reviews/:id/edit", function(req, res) {
+  Review.findById(reqs.params.id, function(err, review) {
+    res.render("reviews-edit", {review: review});
+  });
+});
 
+// CREATE
 app.post("/reviews", function(req, res) {
   Review.create(req.body, function(err, review) {
     console.log(review);

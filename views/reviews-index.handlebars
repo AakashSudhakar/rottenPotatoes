@@ -3,9 +3,39 @@
 <h1>Projects</h1>
 
 <a href="/reviews/new">New Review</a>
+<a href="/">Back to Home</a>
 
 <h1>{{Reviews}}</h1>
 {{#each reviews}}
-  <h3>{{this.title}}</h3>
-  <small>{{this.movieTitle}}</small>
+  <a href="/reviews/{{this._id}}">
+    <h1>{{review.title}}</h1>
+    <h5>{{review.movieTitle}}</h5>
+    <p>{{review.description}}</p>
+  </a>
 {{/each}}
+
+<legend>New Review</legend>
+<form action="/reviews" method="POST">
+  <!-- TITLE -->
+  <p>
+    <label for="title">Title</label><br>
+    <input type="text" name="title" />
+  </p>
+
+  <!-- MOVIE TITLE -->
+  <p>
+    <label for="movieTitle">Movie Title</label><br>
+    <input type="text" name="movieTitle" />
+  </p>
+
+  <!-- LABEL -->
+  <p>
+    <label for="description">Description</label><br>
+    <textarea name="description" rows="10"></textarea>
+  </p>
+
+  <!-- BUTTON -->
+  <p>
+    <button type="submit">Save Review</button>
+  </p>
+</form>

@@ -11,7 +11,9 @@ var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/rotten-potatoes");
 var Review = mongoose.model("Review", {
-  title: String
+  title: String,
+  description: String,
+  movieTitle: String
 });
 var bodyParser = require("body-parser");
 
@@ -40,12 +42,20 @@ app.get("/reviews/new", function(req, res) {
   res.render("reviews-new", {});
 });
 
-
-app.post("/reviews", function(req, res) {
-  console.log(req.body);
-  // res.render("reviews-new", {});
+app.get("/reviews/:id", function(req, res) {
+  Review.findById(req.params.id).exec(function(err, review) {
+    res.render("reviews-show", {review: review});
+  });
 });
 
+
+app.post("/reviews", function(req, res) {
+  Review.create(req.body, function(err, review) {
+    console.log(review);
+
+    res.redirect("/reviews/" + review._id);
+  });
+});
 
 // App initializing handlebars (2/2)
 app.set("view engine", "handlebars")

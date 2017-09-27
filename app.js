@@ -1,5 +1,7 @@
 // app.js
 
+// =============================================================================
+
 var express = require("express");
 var methodOverride = require("method-override");
 var app = express();
@@ -18,6 +20,8 @@ var Review = mongoose.model("Review", {
 });
 var bodyParser = require("body-parser");
 
+// =============================================================================
+
 // Initialize our body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,14 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // App initializing handlebars (1/2)
-app.engine("handlebars", exphbs({defaultLayout: "main"})); // New Review is defined in the layout template so it shows up errywhere
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+// New Review is defined in the layout template so it shows up errywhere
 
-
-// App sends message to local port
-/* app.get("/", function(req, res) {
-  res.render("home", {msg: "Hello World!"});
-  // res.send("Hello World!");
-}); */
+// =============================================================================
 
 // INDEX
 app.get("/", function(req, res) {
@@ -41,10 +41,12 @@ app.get("/", function(req, res) {
   });
 });
 
+// NEW
 app.get("/reviews/new", function(req, res) {
   res.render("reviews-new", {});
 });
 
+// SHOW
 app.get("/reviews/:id", function(req, res) {
   Review.findById(req.params.id).exec(function(err, review) {
     res.render("reviews-show", {review: review});
@@ -73,6 +75,8 @@ app.put("/reviews/:id", function(req, res) {
     res.redirect("/reviews/" + review._id);
   });
 });
+
+// =============================================================================
 
 // App initializing handlebars (2/2)
 app.set("view engine", "handlebars")

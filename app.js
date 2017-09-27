@@ -1,6 +1,7 @@
 // app.js
 
 var express = require("express");
+var methodOverride = require("method-override");
 var app = express();
 var exphbs = require("express-handlebars");
 /* var reviews = [
@@ -20,6 +21,8 @@ var bodyParser = require("body-parser");
 // Initialize our body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Method Override that intercepts PUT request for launching POST/DELETE requests
+app.use(methodOverride("_method"));
 
 // App initializing handlebars (1/2)
 app.engine("handlebars", exphbs({defaultLayout: "main"})); // New Review is defined in the layout template so it shows up errywhere
@@ -60,6 +63,13 @@ app.post("/reviews", function(req, res) {
   Review.create(req.body, function(err, review) {
     console.log(review);
 
+    res.redirect("/reviews/" + review._id);
+  });
+});
+
+// UPDATE (Intercepted PUT request)
+app.put("/reviews/:id", function(req, res) {
+  Review.findByIdAndUpdate(req.params.id, req.body, function(err, review) {
     res.redirect("/reviews/" + review._id);
   });
 });

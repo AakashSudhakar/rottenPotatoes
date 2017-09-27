@@ -12,8 +12,10 @@
     <h5>{{review.movieTitle}}</h5>
     <p>{{review.description}}</p>
   </a>
+  <a href="/reviews/{{this._id}}/edit">Edit</a>
 {{/each}}
 
+<!-- Option for New Review -->
 <legend>New Review</legend>
 <form action="/reviews" method="POST">
   <!-- TITLE -->
@@ -37,5 +39,33 @@
   <!-- BUTTON -->
   <p>
     <button type="submit">Save Review</button>
+  </p>
+</form>
+
+<!-- Option for Edit Review -->
+<legend>Edit Review</legend>
+<!-- HTML forms cannot naturally take PUT action requests, so we must teach them -->
+<form method="POST" action="/reviews/{{reviews._id}}?_method=PUT">
+  <!-- TITLE -->
+  <p>
+    <label for="title">Title</label><br>
+    <input type="text" name="title" value="{{review.title}}"/>
+  </p>
+
+  <!-- MOVIE TITLE -->
+  <p>
+    <label for="movieTitle">Movie Title</label><br>
+    <input type="text" name="movieTitle" value="{{review.movieTitle}}"/>
+  </p>
+
+  <!-- DESCRIPTION -->
+  <p>
+    <label for="description">Description</label>
+    <textarea name="description" rows="10">{{review.description}}</textarea>
+  </p>
+
+  <!-- BUTTON -->
+  <p>
+    <button type="submit" >Save Review</button>
   </p>
 </form>
